@@ -1,7 +1,8 @@
-import { Body, Controller, Post } from "@nestjs/common";
+import { Body, Controller, Get, Post } from "@nestjs/common";
 import { CommonAuthService } from "./commonAuth.service";
 import { SignInDto } from "./dto/signInDto";
 import { SignUpDto } from "./dto/signUpDto";
+import { User } from "src/database/user/entities/user.entity";
 
 @Controller(["auth/common"])
 export class CommmonAuthController {
@@ -14,6 +15,11 @@ export class CommmonAuthController {
 
   @Post("sign-up")
   signUp(@Body() signUpData: SignUpDto): string {
-    return this.commonAuthService.signIn(signUpData);
+    return this.commonAuthService.signUp(signUpData);
+  }
+
+  @Get("all-users")
+  getAllUsers(): Promise<User[]> {
+    return this.commonAuthService.getAllUsers();
   }
 }
