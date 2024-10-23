@@ -10,7 +10,7 @@ async function bootstrap() {
     .setTitle("NestJs Auth")
     .setDescription("Trying my best to make it work")
     .setVersion("1.0")
-    .build();
+    .build(); 
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup("api", app, documentFactory);
 
