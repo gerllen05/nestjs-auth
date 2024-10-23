@@ -2,8 +2,10 @@ import { Body, Controller, Get, Post } from "@nestjs/common";
 import { CommonAuthService } from "./commonAuth.service";
 import { SignInDto } from "./dto/signInDto";
 import { SignUpDto } from "./dto/signUpDto";
-import { User } from "src/database/user/entities/user.entity";
+import { User } from "src/entities/user.entity";
+import { ApiTags } from "@nestjs/swagger";
 
+@ApiTags("auth")
 @Controller(["auth/common"])
 export class CommmonAuthController {
   constructor(private readonly commonAuthService: CommonAuthService) {}
