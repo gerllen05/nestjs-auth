@@ -3,7 +3,7 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Injectable } from '@nestjs/common';
 import { JWTPayload } from '../../interfaces/jwtPayload.interface';
 import { CommonAuthService } from '../commonAuth.service';
-import { User } from 'src/entities/user.entity';
+import { UserEntity } from 'src/entities/user.entity';
 
 @Injectable()
 export class JWTStrategy extends PassportStrategy(Strategy) {
@@ -15,8 +15,7 @@ export class JWTStrategy extends PassportStrategy(Strategy) {
         });
     }
 
-
-    async validate(payload: JWTPayload): Promise<User> {
+    async validate(payload: JWTPayload): Promise<UserEntity> {
         const signInData = { email: payload.email, password: payload.password };
         const user = await this.commonAuthService.validateUser(signInData);
         return user;

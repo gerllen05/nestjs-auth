@@ -1,7 +1,7 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
-export class User {
+export class UserEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -11,7 +11,7 @@ export class User {
   @Column()
   password: string;
 
-  constructor(item: Partial<User>) {
+  constructor(item: Partial<UserEntity>) {
     Object.assign(this, item);
   }
 }

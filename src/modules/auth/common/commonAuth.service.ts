@@ -1,7 +1,7 @@
 import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { SignInDto } from "./dto/signIn.dto";
 import { SignUpDto } from "./dto/signUp.dto";
-import { User } from "src/entities/user.entity";
+import { UserEntity } from "src/entities/user.entity";
 import { Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
 import { JwtService } from "@nestjs/jwt";
@@ -10,8 +10,8 @@ import { JWTPayload } from "../interfaces/jwtPayload.interface";
 @Injectable()
 export class CommonAuthService {
   constructor(
-    @InjectRepository(User)
-    private userRepository: Repository<User>,
+    @InjectRepository(UserEntity)
+    private userRepository: Repository<UserEntity>,
     private jwtService: JwtService
   ) { }
 
@@ -41,7 +41,7 @@ export class CommonAuthService {
     };
   }
 
-  getAllUsers(): Promise<User[]> {
+  getAllUsers(): Promise<UserEntity[]> {
     return this.userRepository.find();
   }
 

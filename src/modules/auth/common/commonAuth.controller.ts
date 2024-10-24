@@ -2,11 +2,12 @@ import { Body, Controller, Delete, Get, Post, Req, UseGuards } from "@nestjs/com
 import { CommonAuthService } from "./commonAuth.service";
 import { SignInDto } from "./dto/signIn.dto";
 import { SignUpDto } from "./dto/signUp.dto";
-import { User } from "src/entities/user.entity";
+import { UserEntity } from "src/entities/user.entity";
 import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 import { JwtDto } from "./dto/jwt.dto";
 import { JwtAuthGuard } from "./guards/jwtAuth.guard";
 import { Request } from "express";
+import { CurrentUser } from "src/decorators/currentUser.decorator";
 
 @ApiTags('auth')
 @Controller(['auth/common'])
@@ -26,12 +27,12 @@ export class CommmonAuthController {
   @Get('user')
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
-  getUser(@Req() req: Request) {
-    return req.user;
+  getUser(@Req() req: Request, @CurrentUser() user: UserEntity) {
+    return user;
   }
 
   @Get('get-all-users')
-  getAllUsers(): Promise<User[]> {
+  getAllUsers(): Promise<UserEntity[]> {
     return this.commonAuthService.getAllUsers();
   }
 
