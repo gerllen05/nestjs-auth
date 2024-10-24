@@ -1,6 +1,6 @@
 import { Injectable, UnauthorizedException } from "@nestjs/common";
-import { SignInDto } from "./dto/signInDto";
-import { SignUpDto } from "./dto/signUpDto";
+import { SignInDto } from "./dto/signIn.dto";
+import { SignUpDto } from "./dto/signUp.dto";
 import { User } from "src/entities/user.entity";
 import { Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
@@ -14,10 +14,9 @@ export class CommonAuthService {
     private jwtService: JwtService
   ) { }
 
-  signUp(signUpDto: SignUpDto): string {
+  signUp(signUpDto: SignUpDto) {
     this.userRepository.save(signUpDto);
     console.log(`Signed up with email: ${signUpDto.email}, password: ${signUpDto.password}`);
-    return "123";
   }
 
   async signIn(signInDto: SignInDto) {

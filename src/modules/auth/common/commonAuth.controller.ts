@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Post } from "@nestjs/common";
 import { CommonAuthService } from "./commonAuth.service";
-import { SignInDto } from "./dto/signInDto";
-import { SignUpDto } from "./dto/signUpDto";
+import { SignInDto } from "./dto/signIn.dto";
+import { SignUpDto } from "./dto/signUp.dto";
 import { User } from "src/entities/user.entity";
 import { ApiTags } from "@nestjs/swagger";
 
@@ -11,8 +11,8 @@ export class CommmonAuthController {
   constructor(private readonly commonAuthService: CommonAuthService) { }
 
   @Post('sign-up')
-  signUp(@Body() signUpDto: SignUpDto): string {
-    return this.commonAuthService.signUp(signUpDto);
+  signUp(@Body() signUpDto: SignUpDto) {
+    this.commonAuthService.signUp(signUpDto);
   }
 
   @Post('sign-in')
