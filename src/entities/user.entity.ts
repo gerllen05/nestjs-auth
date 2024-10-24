@@ -8,7 +8,7 @@ export class UserEntity {
   @Column()
   email: string;
 
-  @Column()
+  @Column({ nullable: true })
   password: string;
 
   constructor(item: Partial<UserEntity>) {

@@ -1,6 +1,5 @@
-export interface JWTPayload {
+export interface JWTPayloadInterface {
     sub: number,
     email: string,
-    password: string,
     auth_method: string
 };
