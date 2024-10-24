@@ -15,7 +15,7 @@ export class CommonAuthService {
   ) { }
 
   signUp(signUpDto: SignUpDto): string {
-    this.userRepository.create(signUpDto);
+    this.userRepository.save(signUpDto);
     console.log(`Signed up with email: ${signUpDto.email}, password: ${signUpDto.password}`);
     return "123";
   }
