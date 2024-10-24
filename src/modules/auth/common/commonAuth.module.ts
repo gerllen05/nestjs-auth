@@ -4,6 +4,7 @@ import { CommonAuthService } from "./commonAuth.service";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { User } from "src/entities/user.entity";
 import { JwtModule } from "@nestjs/jwt";
+import { JWTStrategy } from "./strategies/jwt.strategy";
 
 @Module({
   imports: [
@@ -14,6 +15,6 @@ import { JwtModule } from "@nestjs/jwt";
       signOptions: { expiresIn: '1h' },
     }),],
   controllers: [CommmonAuthController],
-  providers: [CommonAuthService],
+  providers: [CommonAuthService, JWTStrategy],
 })
 export class CommonAuthModule { }
