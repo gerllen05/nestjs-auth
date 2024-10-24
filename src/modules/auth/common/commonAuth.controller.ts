@@ -1,27 +1,32 @@
-import { Body, Controller, Get, Post } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Post } from "@nestjs/common";
 import { CommonAuthService } from "./commonAuth.service";
 import { SignInDto } from "./dto/signInDto";
 import { SignUpDto } from "./dto/signUpDto";
 import { User } from "src/entities/user.entity";
 import { ApiTags } from "@nestjs/swagger";
 
-@ApiTags("auth")
-@Controller(["auth/common"])
+@ApiTags('auth')
+@Controller(['auth/common'])
 export class CommmonAuthController {
-  constructor(private readonly commonAuthService: CommonAuthService) {}
+  constructor(private readonly commonAuthService: CommonAuthService) { }
 
-  @Post("sign-in")
-  signIn(@Body() signInData: SignInDto): string {
-    return this.commonAuthService.signIn(signInData);
+  @Post('sign-up')
+  signUp(@Body() signUpDto: SignUpDto): string {
+    return this.commonAuthService.signUp(signUpDto);
   }
 
-  @Post("sign-up")
-  signUp(@Body() signUpData: SignUpDto): string {
-    return this.commonAuthService.signUp(signUpData);
+  @Post('sign-in')
+  signIn(@Body() signInDto: SignInDto): Promise<{ access_token: string }> {
+    return this.commonAuthService.signIn(signInDto);
   }
 
-  @Get("all-users")
+  @Get('get-all-users')
   getAllUsers(): Promise<User[]> {
     return this.commonAuthService.getAllUsers();
+  }
+
+  @Delete('clear-users')
+  clearUsers() {
+    this.commonAuthService.clearUsers();
   }
 }
