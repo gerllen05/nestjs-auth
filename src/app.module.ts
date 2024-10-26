@@ -8,7 +8,8 @@ import { AuthModule } from "./modules/auth/auth.module";
     TypeOrmModule.forRootAsync({
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',
-        host: configService.getOrThrow('POSTGRES_HOST'),
+        host: 'postgres', // for docker
+        // host: configService.getOrThrow('POSTGRES_HOST'), // for local
         port: configService.getOrThrow('POSTGRES_PORT'),
         username: configService.getOrThrow('POSTGRES_USERNAME'),
         password: configService.getOrThrow('POSTGRES_PASSWORD'),
