@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Post, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Post, UseGuards, UseInterceptors } from "@nestjs/common";
 import { AuthService } from "../auth.service";
 import { SignInDto } from "../dto/signIn.dto";
 import { SignUpDto } from "../dto/signUp.dto";
@@ -10,11 +10,12 @@ import { AuthGuard } from "@nestjs/passport";
 import { Roles } from "src/decorators/roles.deorator";
 import { Role } from "src/enums/role.enum";
 import { RolesGuard } from "src/guards/roles.guard";
+import { CacheInterceptor, CacheTTL } from "@nestjs/cache-manager";
 
 @ApiTags("auth")
 @Controller(["auth/common"])
 export class CommmonAuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private readonly authService: AuthService) { }
 
   @Post("sign-up")
   signUp(@Body() signUpDto: SignUpDto) {
@@ -27,6 +28,8 @@ export class CommmonAuthController {
   }
 
   @Get("user")
+  @UseInterceptors(CacheInterceptor)
+  @CacheTTL(60 * 1000)
   @Roles(Role.User)
   @UseGuards(RolesGuard)
   @UseGuards(AuthGuard("jwt"))

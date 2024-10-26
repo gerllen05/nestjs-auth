@@ -1,4 +1,5 @@
 import {
+  Inject,
   Injectable,
   NotFoundException,
   UnauthorizedException,
@@ -11,14 +12,15 @@ import { JWTPayloadInterface } from "./interfaces/jwtPayload.interface";
 import { SignUpDto } from "./dto/signUp.dto";
 import { SignInDto } from "./dto/signIn.dto";
 import { GoogleUserInterface } from "./interfaces/googleUser.interface";
+import { Cache, CACHE_MANAGER } from "@nestjs/cache-manager";
 
 @Injectable()
 export class AuthService {
   constructor(
-    @InjectRepository(UserEntity)
-    private userRepository: Repository<UserEntity>,
+    @InjectRepository(UserEntity) private userRepository: Repository<UserEntity>,
     private jwtService: JwtService,
-  ) {}
+    @Inject(CACHE_MANAGER) private cacheManager: Cache
+  ) { }
 
   async findUserByEmail(email: string) {
     const user = await this.userRepository.findOneBy({ email: email });
@@ -83,6 +85,7 @@ export class AuthService {
   }
 
   getAllUsers(): Promise<UserEntity[]> {
+    this.cacheManager.reset();
     return this.userRepository.find();
   }
 
