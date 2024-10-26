@@ -1,3 +1,3 @@
 export class JwtDto {
-    access_token: string;
+  access_token: string;
 }

@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common";
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from "@nestjs/common";
 import { UserEntity } from "src/entities/user.entity";
 import { Repository } from "typeorm";
 import { InjectRepository } from "@nestjs/typeorm";
@@ -13,8 +17,8 @@ export class AuthService {
   constructor(
     @InjectRepository(UserEntity)
     private userRepository: Repository<UserEntity>,
-    private jwtService: JwtService
-  ) { }
+    private jwtService: JwtService,
+  ) {}
 
   async findUserByEmail(email: string) {
     const user = await this.userRepository.findOneBy({ email: email });
@@ -38,16 +42,24 @@ export class AuthService {
     //   throw new UnauthorizedException();
     // }
     this.userRepository.save(signUpDto);
-    console.log(`Signed up with email: ${signUpDto.email}, password: ${signUpDto.password}`);
+    console.log(
+      `Signed up with email: ${signUpDto.email}, password: ${signUpDto.password}`,
+    );
   }
 
   async signIn(signInDto: SignInDto) {
     const user = await this.validateUserByPassword(signInDto);
-    console.log(`Signed in with email: ${signInDto.email}, password: ${signInDto.password}`);
+    console.log(
+      `Signed in with email: ${signInDto.email}, password: ${signInDto.password}`,
+    );
 
-    const payload: JWTPayloadInterface = { sub: user.id, email: user.email, auth_method: 'common' };
+    const payload: JWTPayloadInterface = {
+      sub: user.id,
+      email: user.email,
+      auth_method: "common",
+    };
     return {
-      access_token: await this.jwtService.signAsync(payload)
+      access_token: await this.jwtService.signAsync(payload),
     };
   }
 
@@ -60,9 +72,13 @@ export class AuthService {
     }
 
     console.log(`Signed in with google email: ${googleUser.email}`);
-    const payload: JWTPayloadInterface = { sub: user.id, email: user.email, auth_method: 'common' };
+    const payload: JWTPayloadInterface = {
+      sub: user.id,
+      email: user.email,
+      auth_method: "common",
+    };
     return {
-      access_token: await this.jwtService.signAsync(payload)
+      access_token: await this.jwtService.signAsync(payload),
     };
   }
 

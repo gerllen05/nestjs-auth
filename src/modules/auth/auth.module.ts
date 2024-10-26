@@ -17,12 +17,12 @@ import { GoogleStrategy } from "./strategies/google.strategy";
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
         global: true,
-        secret: configService.getOrThrow('JWT_SECRET'),
-        signOptions: { expiresIn: '1h' },
-      })
-
-    }),],
+        secret: configService.getOrThrow("JWT_SECRET"),
+        signOptions: { expiresIn: "1h" },
+      }),
+    }),
+  ],
   controllers: [CommmonAuthController, GoogleAuthController],
   providers: [AuthService, JwtStrategy, GoogleStrategy],
 })
-export class AuthModule { }
+export class AuthModule {}
