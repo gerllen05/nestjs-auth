@@ -84,12 +84,12 @@ export class AuthService {
     };
   }
 
-  getAllUsers(): Promise<UserEntity[]> {
-    this.cacheManager.reset();
-    return this.userRepository.find();
+  async getAllUsers(): Promise<UserEntity[]> {
+    const users = await this.userRepository.find();
+    return users;
   }
 
-  clearUsers() {
-    this.userRepository.clear();
+  async clearUsers() {
+    await this.userRepository.clear();
   }
 }

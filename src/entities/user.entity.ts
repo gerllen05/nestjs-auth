@@ -1,5 +1,6 @@
 import { Role } from "src/enums/role.enum";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { AuditEntity } from "./audit.entity";
 
 @Entity()
 export class UserEntity {
@@ -18,6 +19,9 @@ export class UserEntity {
     default: Role.User,
   })
   roles: Role[];
+
+  // @OneToMany(() => AuditEntity, (audit) => audit.userId)
+  // audits: AuditEntity[];
 
   constructor(item: Partial<UserEntity>) {
     Object.assign(this, item);
